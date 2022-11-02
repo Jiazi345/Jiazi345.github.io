@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://jiazi345.github.io</id>
-    <title>Gridea</title>
-    <updated>2022-11-02T05:38:43.454Z</updated>
+    <id>http://localhost:4000</id>
+    <title>来自荒原</title>
+    <updated>2022-11-02T07:01:53.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://jiazi345.github.io"/>
-    <link rel="self" href="https://jiazi345.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>https://jiazi345.github.io/images/avatar.png</logo>
-    <icon>https://jiazi345.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2022, Gridea</rights>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
+    <rights>All rights reserved 2022, 来自荒原</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://jiazi345.github.io/post/hello-gridea/</id>
-        <link href="https://jiazi345.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[Sclice_1  自大地而来]]></title>
+        <id>http://localhost:4000/post/hello-gridea/</id>
+        <link href="http://localhost:4000/post/hello-gridea/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="https://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2022-10-14T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p>“我记得山风吹过草坪，云游过原野；我记得阳光如何给树的枝叶描上闪光的、金红的边；我记得晨雾和朝阳如何将山林蒙上暖黄的光晕；我记得云如何流过高地的天空，给草地拓上流动的、青灰色的影子。我曾那样肆无忌惮地躺在草地上，和我的同伴分享见闻和幻想。我们周围环绕着羊群、我还记得青草与泥土的味道。我记得我曾脚踏在大地上。”</p>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1667370982285.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1667371064058.jpg" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Slice_2 缄默之城]]></title>
+        <id>http://localhost:4000/post/slice_2-jian-mo-zhi-cheng/</id>
+        <link href="http://localhost:4000/post/slice_2-jian-mo-zhi-cheng/">
+        </link>
+        <updated>2022-10-14T06:38:15.000Z</updated>
+        <content type="html"><![CDATA[<p>“而后机械碾平了草地，烟尘蒙蔽了天空，我的学生从没见过天光便没入炮火，我的孩子还未出生就身患顽疾。可我们迅速适应了新的环境，我们享受短暂的便利，代价是永不见天日。它们将土地蚕食殆尽，在这个行为中我成了它们的左膀右臂。”</p>
+<p>“然后我就会想起，三十多年以前我曾躺在草地上，曾有人问我，我们会不会有一天有吃不完的面包、喝不完的奶？我们和羊群能不能有一天再也不会被病痛困扰？我们夺去了草地和蓝天，甚至没有把面包和羊群还回。</p>
+<p>可我事到如今还依仗着这技术，期待祈祷着它能带回什么，至少予我力量，至少使这一切不要再继续下去了。淋血的刀刃一旦出鞘，也便刺向了自己”<br>
+<img src="http://localhost:4000/post-images/1667371331498.jpg" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1667371340635.jpg" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Slice_3 来自荒原]]></title>
+        <id>http://localhost:4000/post/slice_3-lai-zi-huang-yuan/</id>
+        <link href="http://localhost:4000/post/slice_3-lai-zi-huang-yuan/">
+        </link>
+        <updated>2022-10-12T06:42:43.000Z</updated>
+        <content type="html"><![CDATA[<p>荒原一直记得<br>
+我们一直记得</p>
+<p><img src="http://localhost:4000/post-images/1667371441622.jpg" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1667371518840.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
