@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="cn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>荒原行文档</title>
+		
+<script src="../scripts/script.js"></script>
+	<!--	<link
+			rel="shortcut icon"
+			href="assets/img/favicon.png"
+			type="image/x-icon"
+		/>
+		-->
+		<link
+			rel="stylesheet"
+			href="../styles/style.css"
+		/>            
+<body>
+	<div class='Section_Title'>
+		<h1>油脂笔显示与取色不一致</h1>
+	</div>	
+	
+		<div class='Section'>
+				<p>
+				解决方案：<br>
+				Render Properties ‣ Color Management set to Standard.<br><br>
+				<img src='../img/Bld_GrasePencil/Bld_GrasePencil1.png' width='800' height='400'></img>
+				<br>
+				（可以用看到颜色不一致）
+				<br>
+				取色画上去总比色盘里的颜色偏淡。确认笔刷透明度设置正确后仍然没有改善<br>
+				新建2D绘画项目 &emsp; 法线取色正常
+				查看<a href='https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/utilities/math/math.html'>官方文档</a>后得知，2D项目做了设置：<br>
+				<ul>
+				<li>World Properties ‣ Surface (Background) ‣ Color is set to white. 背景设为全白
+				<li>Render Properties ‣ Color Management is set to Standard. 颜色模式设为stander
+				<li>..........
+				</ul>
+				真正重要的是第二条颜色模式设置<br>
+				<br>
+				修改后：<br>
+				<img src='../img/Bld_GrasePencil/Bld_GrasePencil2.png' width='800' height='400'></img><br>
+				好很多了 但还是有点不一样，可能是场景灯光设置的问题吧
+				</p>
+	</div>
+</body>		
+</html>
