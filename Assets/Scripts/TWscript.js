@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async()=>{
 //add particle effects
 //only apply in certain pages
 try{
-    particlesJS.load('particles-js1', '../Assets/Data/flame.json', function() {
+    particlesJS.load('particles-js1', '../Assets/Data/particles.json', function() {
         console.log('Particles.js loaded - callback');
       });
 }
