@@ -1,49 +1,64 @@
 <!DOCTYPE html>
-<html lang="cn">
+<html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>荒原行文档</title>
-		
-<script src="scripts/script.js"></script>
-	<!--	<link
-			rel="shortcut icon"
-			href="assets/img/favicon.png"
-			type="image/x-icon"
-		/>
-		-->
-		<link
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Home</title>
+		<script src="../Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
 			rel="stylesheet"
-			href="styles/style.css"
-		/>              
+			href="../Assets/Style/TWstyle.css"
+		>
+<body id='TW_1_body'>
 
-	</head>
-	<body>
-	<div class='Section_Title'>
-		<h1 class='Title_0'>目录</h1>
-			<ul> 
-				<li>Blender</li> 
-				<li>Unity Shader</li> 
-				<li>C++</li> 
-		</ul>
-	</div>	
-	
-	<div class='Section'>
-				<h2 class='Title_1'>Blender</h2>
-				<ul> 
-				<li><a href='pages/Bld_GrasePencil.html'>解决油脂笔实际颜色与去色盘不一致</a></li> 
-				<li>shader node踩坑记录</li> 
-		</ul>
-	</div>
-	
-		<div class='Section'>
-				<h2 class='Title_1'>Unity Shader</h2>
-				<ul> 
-				<li>2D URP项目不正确显示天空盒</li> 
-		</ul>
-	</div>
-	</body>
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <Img src="../Assets/Imgs/Title_cn.png" alt='CN_TitleText'>
+                    <p>Traverse Wildness</p>
+                </div>
+            </div>
+
+
+            <div class='ContentBox'>    
+
+                   <a  class="homepage_story_box" style= "background-image:url(../Assets/Imgs/BackGround.png); background-position:left top;"  href="TW_1.html">
+                    STORY
+                   </a>
+            </div>
+
+            <div class='ContentBox' >    
+
+                <a  class="homepage_story_box" style= "background-image:url(../Assets/Imgs/BackGround.png); background-position:right top;"  href="TW_2.html">
+                 GAME
+                </a>
+         </div>
+
+         <div class='ContentBox' >    
+
+            <a  class="homepage_story_box" style= "background-image:url(../Assets/Imgs/BackGround.png); background-position:right bottom;"  href="TW_3.html">
+             ARTS
+            </a>
+     </div>
+
+     <div class='ContentBox' >    
+
+        <a  class="homepage_story_box" style= "background-image:url(../Assets/Imgs/BackGround.png); background-position:left bottom;"  href="TW_4.html">
+         DOCUMENTS
+        </a>
+ </div>
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="../Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="../Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
 </html>

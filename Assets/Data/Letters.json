@@ -1,0 +1,66 @@
+{
+    "L00":
+    {
+        "name":"",
+        "date":"",
+        "IsExpand":false,
+        "message":"[Unresolved Data]",
+        "attached":""
+
+    },
+    "L01":{
+       "name" :"Alice",
+       "date":"12/02/052",
+       "IsExpand":false,
+       "message":"Well, here’s the unfortunate news—the Sun erupted just as predicted. The equatorial collection towers couldn't withstand it. We can't get data from two of them, and the last one is severely damaged. I’m planning to check the situation myself. I’m not sure if there are other Voyager team members out there; if you see this message, please leave a reply. I'll return to check.<br> "
+        ,
+        "attached":""
+    },
+
+    "L02":{
+        "name":"Alice",
+        "date":"06/01/060",
+        "IsExpand":false,
+        "message": "Currently, the Southern Tropic Launch Tower, its auxiliary tower, and the second equatorial tower have reestablished a link. The main equatorial tower and the third one are too damaged to repair. We’ve salvaged whatever usable parts (though there weren’t many) to help fix the second equatorial tower. The energy collection system on the equatorial towers isn’t as badly damaged. In other words, we still have the energy to send electromagnetic pulses to reignite the Sun, though whether the remaining launch systems will work is uncertain.<br><br>The status of the Northern Tropic and polar launch towers is still unconfirmed. After the new year, we'll first check on the Northern Tropic tower. I’ll leave some emergency food and water behind. D has repaired the rainwater filtration system, so it should keep working while we’re gone. Food is scarce, and the extreme cold means even animals can’t survive here.<br><br>Carl and Dan are still trying to track signs of other Voyager members, but it's a daunting task given that we’re mostly traveling on foot. The odds seem slim.<p class='letter_crew_list'<br>Confirmed Crew List:<br>1 person - [Year 052] Alice<br>3 people - [Year 055] B, Carl, Dan</p>By the way, Dan found a guitar, though none of us think his music sounds good. He keeps saying he wants a new audience."
+    ,
+    "attached":""
+        },
+
+        "L03":
+        {
+            "name":"Alixy",
+            "date":"06/27/092",
+            "IsExpand":false,
+            "message":"<br>It’s strange, thinking that as I grow old, you may still be young. Most of the early wakers are gone, and when you read this, I likely will be too. There’s still a portion of the Voyager wreckage left unsearched. Reata thinks there’s little chance you’re alive, but I felt it was important to leave something, so here’s this message.<br><br>Eliza was right,the star eruption far exceeded the towers' capacity to absorb. We’ve inspected the three equatorial towers and the towers along the Tropics, most of which are heavily damaged. Specific data is backed up in the Marigold system. Unfortunately, we don’t have enough resources left to repair these towers, but if the polar tower is functional, there’s still a glimmer of hope for reigniting the Sun. Realta, Reatin, and I have decided to check the polar region. We’re as prepared as possible, but honestly, the risks are immense.<br><br>I’ve left you clothing and weapons. Use them sparingly; resources are few, and it’s nearly impossible to maintain the old technology in these conditions. Thankfully, several Marigold base stations are still operational, so if you reach one, you can seek help—you know what to do.<br><br>Also, about the ship… don’t blame Calen. When the project began, we didn’t have time or resources for technical testing, and any one of us wouldn’t have done better."
+            ,
+            "attached":"Attached:<br>As of today, eight out of the nine Voyager crew members have been found. Here’s the list:<p class='letter_crew_list'><br>1 person - [052] Alice<br>3 people - [055] B, Carl, Dan<br>1 person - [070] Ama<br>2 people - [071] Realta, Reatin<br>1 person - [088] Alixy</p>"
+        },
+
+        "L04":
+        {
+            "name":"Alixy",
+            "date":"10/20/092",
+            "IsExpand":false,
+            "message":"Realta says I’m just wasting power and memory here, and unfortunately, she’s probably right. Eliza used to say the same thing years ago. Still, this is what everyone has been doing for the past fifty years: leaving something behind for those who may come after. You’ve likely read my previous messages. The system has preserved them for us, thankfully, making it possible for me to meet up with Reata and the others.<br><br>Reatin got separated from us in a snowstorm, which hasn’t let up. Reata and I are stuck in the control room with just enough power for basic functions, as we couldn’t collect enough energy. The good news is that the polar tower isn’t too damaged, though it’s disconnected from other control systems. If you want to activate it, you’ll need to establish an external link. If only Reatin were here—he’s the expert on that.<br><br>Reata has decided that if the storm doesn’t ease up, she’ll go look for him. I’ve decided to go with her."
+            ,
+            "attached":""
+       
+        },
+        "L05":
+        {
+            "name":"Alixy, Reata",
+            "date":"10/20/092",
+            "IsExpand":false,
+            "message":"Eliza always used to say I tended to dwell on things of no use, but I still hope that when you go forward, you do so with the blessings of those who came before you. …I don’t know if there’ll be another message. Wishing you good luck, whoever you are.",
+            "attached":""
+        },
+        "L06":
+        {
+            "name":"Calen",
+            "date":"12/24/050",
+            "IsExpand":false,
+            "message":"The structure is nearly complete. If I’m not here, it will assist you.<br><br>I said I wasn’t sure if these systems would still function as planned after the solar eruption. Eliza assured me our design was meant for this, and not to worry. She said she believed in me, but after the ship incident, that’s no comfort. I couldn’t verify it… I’m sorry. But I’m still grateful to her. Sometimes, I catch fleeting visions of all of you still here. I even see the day the ship set sail, with you waving to me, and Alixy running after it, down to the sea. These scenes always appear where the light feels warm, but I worry that if I’m seeing them, it might mean I’m no longer clear-headed. If that’s the case, can the system I designed still be trusted? It must be, it must work.<br><br>All essential information has been set up; may it be of use to you. Today is Christmas. The polar sun appeared for a bit, though it didn’t last long.<br><br>Wishing all well,"
+        ,
+        "attached":""
+        }
+}

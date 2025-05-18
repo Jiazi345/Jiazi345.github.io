@@ -1,0 +1,60 @@
+{
+    "particles": {
+      "number": {
+        "value": 150,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+
+      "size": {
+      "value": 10,
+      "random":true
+    },
+
+    "opacity": {
+      "value": 5,
+      "random":true
+    },
+    "shape":
+    {
+        "type":"image",
+        "image":
+        {
+            "src":"../Assets/Imgs/snow.png",
+            "width":100,
+            "height":100
+        }
+    }
+    ,
+    "move": {
+      "enable": true,
+      "direction":"bottom",
+      "random":true
+    },
+    "line_linked": {
+      "enable": false,
+      "distance": 150,
+      "color": "#ffffff",
+      "opacity": 0.4,
+      "width": 1
+    }
+    },
+    "interactivity": {
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "push"
+      }
+    }
+  },
+    "retina_detect": true
+  }

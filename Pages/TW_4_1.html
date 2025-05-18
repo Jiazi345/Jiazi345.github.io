@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_1</title>
+		<script src="../Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="../Assets/Style/TWstyle.css"
+		> 
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="../Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="TW_4.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>
+                    <p>
+                        <h2>油脂笔显示与取色不一致</h2>
+                        解决方案：<br>
+                        Render Properties ‣ Color Management set to Standard.<br><br>
+                        <img src='../Assets/Imgs/Bld_GrasePencil/Bld_GrasePencil1.png' width='800' height='400' alt="doc_1_1">
+                        <br>
+                        （可以用看到颜色不一致）
+                        <br>
+                        取色画上去总比色盘里的颜色偏淡。确认笔刷透明度设置正确后仍然没有改善<br>
+                        新建2D绘画项目 &emsp; 法线取色正常
+                        查看<a href='https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/utilities/math/math.html' class="black_a">官方文档</a>后得知，2D项目做了设置：<br>
+                        <ul>
+                        <li>World Properties ‣ Surface (Background) ‣ Color is set to white. 背景设为全白
+                        <li>Render Properties ‣ Color Management is set to Standard. 颜色模式设为stander
+                        <li>..........
+                        </ul>
+                        真正重要的是第二条颜色模式设置<br>
+                        <br>
+                        修改后：<br>
+                        <img src='../Assets/Imgs/Bld_GrasePencil/Bld_GrasePencil2.png' width='800' height='400' alt="doc_1_2"><br>
+                        好很多了
+     
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="../Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="../Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>

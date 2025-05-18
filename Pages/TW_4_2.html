@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_1</title>
+		<script src="../Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="../Assets/Style/TWstyle.css"
+		> 
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="../Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="TW_4.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>
+                    <p>
+                        <h2>Create a disturtion transparent ball use shader code</h2>
+                        <img src="../Assets/Imgs/Urp/4_2_2.gif" alt="4_2_2" width='600' height='400' >
+                        <h3>-use noise texture to create normal map-</h3>
+                        first sample 2D noise texture, multiply time to distrub it.
+                        <code>
+                            <br>float2 twistuv=IN.uv*floor(_NoiseScale)+_Time.x*_NoiseTimeScale;                
+                            <br>float4 noise=SAMPLE_TEXTURE2D(_NoiseTex,sampler_NoiseTex,twistuv);
+                        </code>            
+                        <br>
+                        Unity shader graph has normal From Height node, here is <a href="https://docs.unity.cn/Packages/com.unity.shadergraph@12.1/manual/Normal-From-Height-Node.html" class="black_a">code</a> generated:<br>
+                        <br><img src="../Assets/Imgs/Urp/4_2_1.jpg" width='800' height='400' alt="4_2_1">
+                        <br>
+                        The first three inputs are height and strength and object's world position, which are easy to get.
+                        <br>
+                        The third input, is TNB martix. It's used to convert normal between two space, world space and tangent space.
+                        <br>
+                        It can be caculate use world Tangent ,world BiTangent and world space normal. Let's get them in vertex shader:
+                        <code>
+                           <br> <br>VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
+                        <br> VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
+                        <br>OUT.normalWS= normalize(mul(normalInputs.normalWS, (float3x3)unity_ObjectToWorld));
+                       <br>OUT.worldTangent = normalize(mul(IN.tangentOS.xyz, (float3x3)unity_ObjectToWorld));
+                       <br>OUT.worldBiTangent = cross(OUT.normalWS, OUT.worldTangent) * IN.tangentOS.w; 
+                        </code>
+                        
+                        <br><br>Then get TNB martix in fragment shader and use it in normalFromHeight function:
+                        <code>
+                            <br><br>float3x3 TNB=float3x3(IN.worldTangent, IN.worldBiTangent, IN.normalWS);
+                            <br>float3 noiseNormal;
+                            <br>Unity_NormalFromHeight_Tangent_float(noise.x,_NoiseNormalStrength,IN.worldPos,TNB,
+                                                                  noiseNormal);      
+                        </code>     
+                         
+                         
+                         <h3>-create RGB split effect-</h3>
+                        To create this, we render background in an opaque object, and shift R G B value in different directions.
+                        <br>first we need to get screen shoots. Unity provide us Opaque Texture, to use this click Opaque Texture in pipeline assets.
+                        <br> Opaque Texture will take a screen shoot of all the opaque objects in scene. 
+                        <br> we also need to set the <strong>Tags { "RenderType"="Transparent" "Queue"="Transparent" }</strong>, and set <strong> Blend SrcAlpha OneMinusSrcAlpha</strong>
+                        <br>we need to get screen position to sample this texture
+                        <br>To do this, use<strong> ComputeScreenPos(positionInputs.positionCS) </strong>in vertex shader.
+                        <br>then, give three different offset to r,g,b value
+                        <code>
+                            <br><br>float2 offset1=float2(-1,-1);
+                           <br> float2 offset2=float2(0,1);
+                            <br>float2 offset3=float2(1,-1);
+                           
+                           <br> float4 albedo_all=SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, ScreenPos);
+                           <br> float4 albedo_r=SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture,(ScreenPos-noiseNormal-offset1*_RGBSplit));
+                            <br>float4 albedo_g=SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, (ScreenPos-noiseNormal-offset2*_RGBSplit));
+                            <br>float4 albedo_b=SAMPLE_TEXTURE2D(_CameraOpaqueTexture, sampler_CameraOpaqueTexture, (ScreenPos-noiseNormal-offset3*_RGBSplit));            
+                        </code>
+                         <br><br>Then we can return color value now.
+                         <code>
+                            <br><br>float4 albedo =float4(albedo_r.r,albedo_g.g,albedo_b.b,1);
+                            <br>return albedo;</code>
+
+                        <h3>-Reference-</h3>
+                        <a class="black_a" href="https://www.youtube.com/watch?v=0Cr6RnuNtuo">https://www.youtube.com/watch?v=0Cr6RnuNtuo</a>
+                        <br><a class="black_a" href="https://blog.csdn.net/zakerhero/article/details/107635481">https://blog.csdn.net/zakerhero/article/details/107635481</a>
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="../Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="../Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen 混合模式</title>
+    <script src="../Assets/Scripts/particles.js"></script>
+    <style>
+        body {
+            background-color: rgb(0, 0, 0);
+    padding-top: 2%;
+    padding-left:8%;
+    padding-right:8%;
+    font-family: "Times New Roman","Arial", "Helvetica", serif;
+    font-size: 20pt;
+        }
+        .blend-image {
+            mix-blend-mode: screen; /* 使用 Screen 混合模式 */
+            width: 300px;
+        }
+        #particles-js1
+        {
+    position: fixed; /* 固定位置，随页面滚动不动 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            z-index: -1; /* 设置在最底层 */
+            }
+#fireCanvas{
+    position: fixed;
+    bottom: -70px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: -1; 
+    width: 100%; 
+
+    max-height: 400px;
+    min-width: 1400px;
+    min-height: 300px;
+}
+    </style>
+</head>
+
+<body>
+<div id="particles-js1"></div>
+<canvas id="fireCanvas"></canvas>
+<script>
+const canvas = document.getElementById("fireCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width =1200;
+canvas.height = 600;
+
+const frames = [];
+const totalFrames = 24;
+let frameIndex = 0;
+const frameRate = 24;  // 目标 FPS
+const frameInterval = 1000 / frameRate;  // 计算帧间隔（毫秒）
+
+// 预加载所有帧
+for (let i = 1; i <= totalFrames; i++) {
+    let img = new Image();
+    img.src = `../Assets/Imgs/flames/00${i}.png`;
+    frames.push(img);
+}
+
+// 使用 setInterval 设定帧速率
+function playAnimation() {
+    setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(frames[frameIndex], 0, 0, canvas.width, canvas.height);
+        frameIndex = (frameIndex + 1) % totalFrames;
+    }, frameInterval);
+}
+
+frames[0].onload = playAnimation;
+
+//only apply in certain pages
+try{
+    particlesJS.load('particles-js1', '../Assets/Data/flame.json', function() {
+        console.log('Particles.js loaded - callback');
+      });
+}
+catch
+{
+    console.log("this page do not have particle effect");
+}
+//#endregion
+
+
+</script>
+
+</body>
+</html>
