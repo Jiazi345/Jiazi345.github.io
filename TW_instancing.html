@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_3</title>
+		<script src="Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="Assets/Style/TWstyle.css"
+		> 
+
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="index.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>  
+	<div class="ne-alert" style="border:1px solid #B5EFF2;background-color:rgba(181,239,242,0.5);margin:4px 0;padding:10px;">
+		<p id="u9c4be157" class="ne-p">
+			<span class="ne-text">Compute shader+GPU instancing</span>
+		</p>
+	</div>
+<span class="ne-text">关于C#里绘制实例的方法们：</span>
+	<ul class="ne-ul">
+		<li id="uffe8b382">
+			DrawMeshInstanced需要自己提供一个Matrix[]数组，来操作每个Instance的位置、旋转、缩放.一个批次最多绘制1023个对象。<br />
+		</li>
+		<li id="u37f01706">
+			DrawMeshInstancedIndirect则可以通过ComputeBuffer来提供这些数据。包括绘制数量也要通过ComputeBuffer提供<br />
+		</li>
+		<li id="udb32b30e">
+			DrawMeshInstancedProcedural跟DrawMeshInstancedIndirect类似，但绘制数量可以直接通过接口提供。
+		</li>
+	</ul>
+	<p id="ube05fd86" class="ne-p">
+		<span class="ne-text">大致流程：</span>
+	</p>
+<span class="ne-text">C#部分</span>
+	<p id="ud725b783" class="ne-p">
+		<span class="ne-text">1 执行computeshader 更新角度</span>
+	</p>
+	<p id="u06c7497d" class="ne-p">
+		<span class="ne-text">shader.Dispatch(kernelLeanGrass, groupSize, 1, 1);</span>
+	</p>
+	<p id="u74ad1021" class="ne-p">
+		<span class="ne-text">2 使用Graphics.DrawMeshInstancedIndirect(mesh, 0, material, bounds, bufferWithArgs)绘制实例</span>
+	</p>
+	<p id="u2cf33e39" class="ne-p">
+		<span class="ne-text">需要准备mesh，materia和一个computebuffer（</span>GPU 缓冲区包含相应的参数，指示要绘制此网格的实例数。<span class="ne-text">）</span>
+	</p>
+	<p id="u7fbd264d" class="ne-p">
+		<span class="ne-text">3 向shader和cpmpute shader传递数据</span>
+	</p>
+	<p id="u21982756" class="ne-p">
+		<span class="ne-text">把顶点数据储存到数组中，再把数组传递到buffer</span>
+	</p>
+	<p id="u5b7a709e" class="ne-p">
+		<span class="ne-text">clumpsBuffer = new ComputeBuffer(count,SIZE_GRASS_CLUMP); clumpsBuffer.SetData(clumpsArray);</span>
+	</p>
+	<p id="u40a5334a" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+	<p id="ue363f9c4" class="ne-p">
+		<br />
+	</p>
+<span class="ne-text">shader部分</span>
+	<p id="u393c365e" class="ne-p">
+		<span class="ne-text">1 启用GPU实例化：</span>
+	</p>
+	<p id="u37a09e7e" class="ne-p">
+		<span class="ne-text">#pragma multi_compile_instancing</span>
+	</p>
+	<p id="ue7652c3c" class="ne-p">
+		<span class="ne-text">#pragma instancing_options procedural:setup</span>
+	</p>
+	<p id="ufbba433e" class="ne-p">
+		<span class="ne-text"> </span>
+	</p>
+	<p id="uf3d8d3b5" class="ne-p">
+		<span class="ne-text">2 定义结构体GrassClump和对应的buffer: StructuredBuffer&lt;GrassClump&gt; clumpsBuffer </span>
+	</p>
+	<p id="u79552086" class="ne-p">
+		<span class="ne-text">接收从C#传入的compute buffer（ material.SetBuffer("clumpsBuffer", clumpsBuffer);）</span>
+	</p>
+	<p id="ucc75cb69" class="ne-p">
+		<span class="ne-text">和其它一些旋转位置属性</span>
+	</p>
+	<p id="u8d882486" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+<pre id="jFRo2" class="ne-codeblock language-cpp">#ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
+            struct GrassClump   
+            {
+                float3 position;
+                float lean;
+                float noise;
+            };
+            StructuredBuffer&lt;GrassClump&gt; clumpsBuffer;
+            #endif</pre>
+	<p id="u01397eb7" class="ne-p">
+		<br />
+	</p>
+	<p id="u91d41d85" class="ne-p">
+		<span class="ne-text">3 vert: 根据instanceID对传入的实例信息进行处理（设置位置 随机角度旋转 缩放）</span>
+	</p>
+	<p id="ub66e2509" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+<pre id="UdqcT" class="ne-codeblock language-cpp">float4x4 create_martix(float3 pos, float theta)
+            {
+                float c=cos(theta);
+                float s=sin(theta);
+                return float4x4(
+                 c,-s,0,pos.x,   
+                 s,c,0,pos.y,
+                0,0,1,pos.z,
+                0,0,0,1   );    
+            }//根据顶点位置和角度构造变换矩阵
+
+ Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+
+                float3 positionWS = TransformObjectToWorld(IN.positionOS.xyz);
+                OUT.positionHCS = TransformWorldToHClip(positionWS);
+                OUT.normalWS = TransformObjectToWorldNormal(IN.normalOS);
+                OUT.viewWS = GetWorldSpaceViewDir(positionWS);
+                OUT.uv=IN.uv;
+                
+                //GPUinstancing相关操作
+                #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
+                //根据buffer和ID获取实例信息，计算变换矩阵
+                GrassClump clump=clumpsBuffer[IN.instanceID];
+                _Position=clump.position;
+                _Martix=create_martix(clump.position,clump.lean);
+                
+                IN.positionOS.xyz*=_Scale;
+                float4 rotatedVertex=mul(_Martix,IN.positionOS);
+                IN.positionOS.xyz+=_Position;
+                IN.positionOS=lerp(IN.positionOS,rotatedVertex,IN.uv.y);
+                //根据uv使草上方摆动下方不动
+
+                positionWS = TransformObjectToWorld(IN.positionOS.xyz);
+                OUT.positionHCS = TransformWorldToHClip(positionWS);
+                OUT.viewWS = GetWorldSpaceViewDir(positionWS);
+                #endif
+                
+                return OUT;
+            }</pre>
+	<p id="u534d4ac6" class="ne-p">
+		<br />
+	</p>
+<span class="ne-text">compute shader:</span>
+	<p id="u2afccf98" class="ne-p">
+		<span class="ne-text">1 接收C#传递的buffer</span>
+	</p>
+	<p id="u8dd76120" class="ne-p">
+		<span class="ne-text">2 更新buffer的角度</span>
+	</p>
+<pre id="gWN76" class="ne-codeblock language-cpp">#define THREADGROUPSIZE 128
+#pragma kernel LeanGrass
+
+
+RWTexture2D&lt;float4&gt; Result;
+
+
+struct GrassClump
+{
+    float3 position;
+    float lean;
+    float noise;
+};
+RWStructuredBuffer&lt;GrassClump&gt; clumpsBuffer;
+float time;
+float maxLean;
+
+[numthreads(THREADGROUPSIZE,1,1)]
+void LeanGrass (uint3 id : SV_DispatchThreadID)
+{
+   GrassClump clump= clumpsBuffer[id.x];
+   clump.lean=sin(time)*maxLean*clump.noise;
+    clumpsBuffer[id.x]=clump;
+}</pre>
+	<p id="u4e2c4987" class="ne-p">
+		<br />
+	</p>
+	<p id="u7b65bf8d" class="ne-p">
+		<br />
+	</p>
+	<p id="uae93eaf3" class="ne-p">
+		<span class="ne-text">除了传入模型，可以在在C#脚本里定义模型：</span>
+	</p>
+	<p id="ucd47b82c" class="ne-p">
+		<span class="ne-text">Vector3[] Verties(顶点位置)</span>
+	</p>
+	<p id="ud6d9174c" class="ne-p">
+		<span class="ne-text">Vector3[] normals 法线方向</span>
+	</p>
+	<p id="u0b008988" class="ne-p">
+		<span class="ne-text">Vector2[] uv 纹理坐标</span>
+	</p>
+	<p id="u6d318935" class="ne-p">
+		<span class="ne-text">int[] indicies 顶点在三角形中的顺序。unity是逆时针的</span>
+	</p>
+	<p id="uc9a48113" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+	<p id="u3a0c5fb3" class="ne-p">
+		<img src="https://cdn.nlark.com/yuque/0/2025/jpeg/43118317/1741220990191-64659c5d-1398-4409-8df1-31d95634621d.jpeg" width="880" title="" id="ua825023d" class="ne-image" />
+	</p>
+	<p id="uaece02d0" class="ne-p">
+		<a href="https://www.bilibili.com/video/BV1nNefe5EVa" target="_blank" class="ne-link"><span class="ne-text">https://www.bilibili.com/video/BV1nNefe5EVa</span></a>
+	</p>
+	<p id="ub340930c" class="ne-p">
+		<span class="ne-text">然后使用Mesh类的方法设置这些属性值</span>
+	</p>
+<pre id="khOxJ" class="ne-codeblock language-cpp">Mesh Blade
+    {
+        get
+              {
+            Mesh mesh;
+            if (blade != null)
+            {
+                mesh = blade;
+            }
+            else
+            {
+                mesh = new Mesh();
+
+                float rowHeight = Height / 4;
+                float halfWidth = Height / 10;
+                Vector3[] Vertices = {
+        new Vector3(-halfWidth, 0, 0),
+        new Vector3 (halfWidth, 0, 0 ),
+       ...
+        };
+
+                Vector3 normal = new Vector3(0, 0, 1);
+                Vector3[] Normals = {
+            normal,
+            normal,
+          ...
+        };
+                Vector2[] uvs = {
+         new Vector2(0,0),
+         new Vector2(1,0),
+        ...
+        };
+
+                int[] indicies =
+                    {
+            0,1,...
+        };
+
+                mesh.vertices = Vertices;
+                mesh.normals = Normals;
+                mesh.uv = uvs;
+                mesh.SetIndices(indicies, MeshTopology.Triangles, 0);
+            }
+            return mesh;
+        }
+        }</pre>
+	<p id="uf235bd4a" class="ne-p">
+		<br />
+	</p>
+	<p id="u6b6d7738" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+	<p id="ucf9f6c7e" class="ne-p">
+		<span class="ne-text">给每颗草一个随机的旋转值，让根部绕Y轴旋转，转好后再用之前的旋转矩阵计算上半部分的旋转偏移，最后加上偏移。</span>
+	</p>
+	<p id="uf9517a85" class="ne-p">
+		<span class="ne-text">在加上传递自C#的clump,position值前，每一根草的位置坐标都是一样的。</span>
+	</p>
+	<p id="u7f0386e6" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+<pre id="fy6c4" class="ne-codeblock language-cpp">//原始计算随机摆动的矩阵
+float4x4 create_martix(float3 pos, float theta)
+            {
+                float c=cos(theta);
+                float s=sin(theta);
+                return float4x4(
+                 c,-s,0,pos.x,   
+                 s,c,0,pos.y,
+                0,0,1,pos.z,
+                0,0,0,1   );    
+            }
+//让根部绕Y轴旋转
+float4x4 RotateAroundY( float theta)
+{
+                float c=cos(theta);
+                float s=sin(theta);
+                return float4x4(
+                 c,0,s,0,   
+                 0,1,0,0,
+                 -s,0,c,0,
+                0,0,0,1   );  
+}
+
+Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+                ...
+                     GrassClump clump=clumpsBuffer[IN.instanceID];
+                _Position=clump.position;
+                _Martix=RotateAroundY(clump.noise*_MaxRotate*0.5);//构造转根部的矩阵
+
+                _Martix2=create_martix(clump.position,clump.lean);//随风摆动旋转和位移的矩阵
+
+                IN.positionOS.xyz*=_Scale;
+                IN.positionOS.xyz=mul(_Martix,IN.positionOS);
+                float4 rotatedVertex=mul(_Martix2,IN.positionOS);
+                //↑这个时候为止，草的根部全在长草的平面中心
+                IN.positionOS.xyz+=_Position;
+                
+                ...
+            }</pre>
+	<p id="uc037d0d5" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+	<p id="ufbd64874" class="ne-p">
+		<span class="ne-text">在凹凸不平的表面上长草：</span>
+	</p>
+	<p id="udfa79a5f" class="ne-p">
+		<span class="ne-text">对每颗草，使用射线获取它们的y轴坐标。需要一个meshcollider</span>
+	</p>
+	<p id="udca82c1e" class="ne-p">
+		<span class="ne-text"></span>
+	</p>
+<pre id="e420R" class="ne-codeblock language-cpp">void InitPos(int count,Bounds bounds)
+    {
+        gameObject.AddComponent&lt;MeshCollider&gt;();//添加collider
+
+        clumpsArray = new GrassClump[count];
+
+        RaycastHit hit;
+        Vector3 v = new Vector3();
+        v.y = bounds.center.y + bounds.extents.y;//物体空间坐标最高点
+        v = transform.TransformPoint(v);//转化到世界坐标
+        float castY = v.y;
+        v.Set(0, 0, 0);
+        v.y = bounds.center.y - bounds.extents.y;
+        v = transform.TransformPoint(v);
+        float minY = v.y;
+        float range = castY - minY;
+        castY += 10;
+
+        int loopcount = 0;
+        int index = 0;
+        
+        while(index&lt;count&amp;&amp;loopcount&lt;(count*10))
+        {
+            loopcount++;
+            Vector3 pos = new Vector3(Random.value * bounds.extents.x * 2 -
+               bounds.extents.x + bounds.center.x, 0,
+               Random.value * bounds.extents.z * 2 -
+               bounds.extents.z + bounds.center.z);
+            pos = transform.TransformPoint(pos);
+            pos.y = castY;
+            if(Physics.Raycast(pos,Vector3.down,out hit))
+            {
+                pos.y = hit.point.y;
+                float deltaHeight = ((pos.y - minY) / range * HeightAffect);
+                if (float.IsNaN(deltaHeight)) deltaHeight = 0;//判断一下是否发生除以0
+                if(Random.value&gt;deltaHeight)
+                {
+                    GrassClump clump = new GrassClump(pos);
+                    clumpsArray[index++] = clump;
+                    Debug.Log("index" + index);
+                }
+            }
+        }
+
+    }</pre>
+	<div class="ne-alert" style="border:1px solid #B5EFF2;background-color:rgba(181,239,242,0.5);margin:4px 0;padding:10px;">
+		<p id="ufed92644" class="ne-p">
+			<span class="ne-text">错题本：</span>
+		</p>
+		<p id="u7fda6086" class="ne-p">
+			<span class="ne-text">1 #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED 字打错了。永远不执行；检查检查setBuffer中的名称和shader中是否一致</span>
+		</p>
+		<p id="u7d40b850" class="ne-p">
+			<span class="ne-text">2 使用uv计算草上部分摆动下部分固定，但uv没有在顶点着色器里传递到片元着色器。在顶点输出结构里的InstanceID也需要在顶点着色器中进行赋值 否则在片元着色器中都是0</span>
+		</p>
+		<p id="u89d3641b" class="ne-p">
+			<span class="ne-text">3 URP里没有unity_InstanceID，改为在顶点/片元结构体中增加uint instanceID : SV_InstanceID;在顶点着色器计算偏移</span>
+		</p>
+		<p id="uc910db3a" class="ne-p">
+			<span class="ne-text">4 Graphics.DrawMeshInstancedIndirect(mesh, 0, material, bounds, argsBuffer); 这里的bounds太小会导致部分草被不正确的剔除，以及在游戏视图完全看不到草。把bounds改大：bounds = new Bounds(Vector3.zero, new Vector3(200, 200, 200));</span>
+		</p>
+		<p id="u1d5b5be3" class="ne-p">
+			<span class="ne-text">5 除以0会导致值为float.NAN 判断一下if (float.IsNaN(deltaHeight))</span>
+		</p>
+		<p id="u59c566bd" class="ne-p">
+			<span class="ne-text"></span>
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #DBF1B7;background-color:rgba(219,241,183,0.5);margin:4px 0;padding:10px;">
+		<p id="uc6e75468" class="ne-p">
+			<span class="ne-text">待做：</span>
+		</p>
+		<p id="u22e969ba" class="ne-p">
+			<span class="ne-text">当有多个物体时只有一个物体会长草。如何让多个物体长草？</span>
+		</p>
+		<p id="u25107a36" class="ne-p">
+			<span class="ne-text">想法：脚本管理所有长草物体，把多个模型计算出的草数组信息传递到同一个buffer里</span>
+		</p>
+		<p id="u6cf477ee" class="ne-p">
+			<span class="ne-text">物体脚本负责创建数组，manager负责提交buffer</span>
+		</p>
+		<p id="u133e00b1" class="ne-p">
+			<span class="ne-text">尝试了在C#里直接根据玩家距离更新草位置 会很卡</span>
+		</p>
+	</div>
+
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>

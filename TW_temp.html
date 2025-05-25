@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_3</title>
+		<script src="Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="Assets/Style/TWstyle.css"
+		> 
+
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="index.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>  
+<div class="ne-alert" style="border:1px solid #F8D6B9;background-color:rgba(248,214,185,0.5);margin:4px 0;padding:10px;">
+		<p id="uadad79df" class="ne-p">
+			<span class="ne-text">Unity目前的全局光照方案：</span>
+		</p>
+		<p id="u5287d84c" class="ne-p">
+			<span class="ne-text">Progressive Lightmapper</span>
+		</p>
+		<p id="ucb61954b" class="ne-p">
+			<span class="ne-text">Enlighten(已弃用?)</span>
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #DBF1B7;background-color:rgba(219,241,183,0.5);margin:4px 0;padding:10px;">
+		<p id="ue0a5c842" class="ne-p">
+			<span class="ne-text">光照贴图烘焙</span>
+		</p>
+		<p id="ub7d8946a" class="ne-p">
+			<span class="ne-text">Progressive  Lightmapper 渐进式光照贴图</span>
+		</p>
+		<p id="u7f5b7ed1" class="ne-p">
+			<span class="ne-text">烘焙光照贴图要求：1模型上不能有重复UV</span>
+		</p>
+		<p id="u7d138cbc" class="ne-p">
+			<span class="ne-text">2UV之间要有足够距离</span>
+		</p>
+		<p id="u080c6c30" class="ne-p">
+			<span class="ne-text">3把参与烘焙的物体标记为static</span>
+		</p>
+		<p id="u6d5f0374" class="ne-p">
+			<span class="ne-text">1：可以在import setting中的Generate map uv2生成第二套UV</span>
+		</p>
+		<p id="u05f11304" class="ne-p">
+			<span class="ne-text">2 static 勾选ContributeGI Reflection Probe Static</span>
+		</p>
+		<p id="u29ebd966" class="ne-p">
+			<span class="ne-text">光照贴图的烘焙结果？Lightmap（静态物体的间接光照）Light Probes(动态物体接收静态物体的间接光照) Reflection Probes()</span>
+		</p>
+		<p id="u75195a0b" class="ne-p">
+			<span class="ne-text"></span>
+		</p>
+		<p id="u2e2aa811" class="ne-p">
+			<span class="ne-text">shadow distance? 影响接收实时阴影的范围</span>
+		</p>
+		<p id="ue9e83716" class="ne-p">
+			<span class="ne-text">设置方式（URP：</span>Edit &gt; Project Settings &gt; Graphics中选择UniversalRenderPipelineAsset<span class="ne-text">）</span>
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #B5EFF2;background-color:rgba(181,239,242,0.5);margin:4px 0;padding:10px;">
+		<p id="u829e9ce3" class="ne-p">
+			<span class="ne-text">使用光照贴图和探针的全局光照-使用和减少烘培时间的方案 </span>
+		</p>
+		<p id="u0aa26221" class="ne-p">
+			<a href="https://zhuanlan.zhihu.com/p/101838459" target="_blank" class="ne-link"><span class="ne-text">https://zhuanlan.zhihu.com/p/101838459</span></a>
+		</p>
+		<p id="ud49c31eb" class="ne-p">
+			<span class="ne-text">探针：减少生成图标数量，减少预计算时间 适合较小物体</span>
+		</p>
+		<p id="u60d5340e" class="ne-p">
+			<span class="ne-text">使用阶数有限的球谐函数，意味着缺少高频信息 </span>
+		</p>
+		<p id="ue3e21042" class="ne-p">
+			<span class="ne-text">优化图表数 lightmapuv的展开方式： autouv max distance/max angle/ignore normals（</span>没找到在哪儿？）
+		</p>
+		<p id="ua1fc6813" class="ne-p">
+			<span class="ne-text"></span>
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #D9C9F8;background-color:rgba(217,201,248,0.5);margin:4px 0;padding:10px;">
+		<p id="uab3e6dfe" class="ne-p">
+			<span class="ne-text">在代码中使用：</span>
+		</p>
+		<p id="u945218fb" class="ne-p">
+			<a href="https://zhuanlan.zhihu.com/p/461714033" target="_blank" class="ne-link"><span class="ne-text">https://zhuanlan.zhihu.com/p/461714033</span></a>
+		</p>
+		<p id="ub4ba5a26" class="ne-p">
+			<strong>#pragma multi_compile _ LIGHTMAP_ON 编译是否使用LightMap</strong>
+		</p>
+		<p id="u106ee38f" class="ne-p">
+			<strong>#pragma multi_compile _ DIRLIGHTMAP_COMBINED LightMap是否使用方向向量</strong>
+		</p>
+		<p id="uf8ca57cd" class="ne-p">
+			<strong>#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE 烘焙的混合模式</strong>
+		</p>
+		<p id="ue2502838" class="ne-p">
+			<strong></strong>
+		</p>
+		<p id="u2d375615" class="ne-p">
+			<strong>顶点结构体：声明lightmauv</strong>
+		</p>
+		<p id="u91013daf" class="ne-p">
+			<strong>片元结构体：</strong>DECLARE_LIGHTMAP_OR_SH（lightmapuv,vertexSH,1）
+		</p>
+		<p id="ua4833071" class="ne-p">
+			<span class="ne-text">第二个参数是</span>lightmapUV or vertexSH， 最后一个决定是第几个texcoord
+		</p>
+		<p id="u5aa17bf9" class="ne-p">
+			这个宏会定义OUTPUT_LIGHTMAP_UV 和OUTPUT_SH这两个宏
+		</p>
+		<p id="uc11007ab" class="ne-p">
+			使用GI：half3 backedGI=SAMPLE_GI(i.lightmapuv,i.vertexSH,normalWS);
+		</p>
+		<p id="ud85593e7" class="ne-p">
+			mix接收实时阴影：MixrealTimeandBackedGI( Light light, normalWS,backedGI, shadowmask)
+		</p>
+	</div>
+
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>

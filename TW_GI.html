@@ -32,16 +32,197 @@
 
             <div class='ContentBox' id='characters'>
                 <div class='BcColor_ContentBox'>  
-                    ```hlsl
-                    struct Light
-                    {
-                    half3 direction;
-                    half3 color;
-                    float siatanceAttenuation;
-                    half shadowAttenuation;
-                    uint layerMask;
-                    }
-                    ```
+	<div class="ne-alert" style="border:1px solid #F8D6B9;background-color:rgba(248,214,185,0.5);margin:4px 0;padding:10px;">
+		<p id="uadad79df" class="ne-p">
+			<span class="ne-text">Unity目前的全局光照方案：</span> 
+		</p>
+		<p id="u5287d84c" class="ne-p">
+			<span class="ne-text">backed GI-Progressive Lightmapper</span> 
+		</p>
+		<p id="ucb61954b" class="ne-p">
+			<span class="ne-text">PreComputed GI-Enlighten</span> 
+		</p>
+		<p id="u7c13473d" class="ne-p">
+			<span class="ne-text">precomputed GI预计算visibillity, 允许在变换的光源下实时反应，可能需要几帧的时间实时计算。与BackedGI不同, 预计算的光照贴图不以图片资产的形式出现在assets文件夹中</span> 
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #DBF1B7;background-color:rgba(219,241,183,0.5);margin:4px 0;padding:10px;">
+		<p id="ue0a5c842" class="ne-p">
+			<span class="ne-text">光照贴图烘焙</span> 
+		</p>
+		<p id="ub7d8946a" class="ne-p">
+			<span class="ne-text">Progressive  Lightmapper 渐进式光照贴图</span> 
+		</p>
+		<p id="u7f5b7ed1" class="ne-p">
+			<span class="ne-text">烘焙光照贴图要求：1模型上不能有重复UV</span> 
+		</p>
+		<p id="u7d138cbc" class="ne-p">
+			<span class="ne-text">2UV之间要有足够距离</span> 
+		</p>
+		<p id="u080c6c30" class="ne-p">
+			<span class="ne-text">3把参与烘焙的物体标记为static</span> 
+		</p>
+		<p id="u6d5f0374" class="ne-p">
+			<span class="ne-text">1：可以在import setting中的Generate map uv2生成第二套UV</span> 
+		</p>
+		<p id="u05f11304" class="ne-p">
+			<span class="ne-text">2 static 勾选ContributeGI Reflection Probe Static</span> 
+		</p>
+		<p id="u29ebd966" class="ne-p">
+			<span class="ne-text">光照贴图的烘焙结果？Lightmap（静态物体的间接光照）Light Probes(动态物体接收静态物体的间接光照) Reflection Probes()</span> 
+		</p>
+		<p id="u75195a0b" class="ne-p">
+			<span class="ne-text"></span> 
+		</p>
+		<p id="ue9e83716" class="ne-p">
+			<span class="ne-text">设置方式（URP：</span>Edit &gt; Project Settings &gt; Graphics中选择UniversalRenderPipelineAsset<span class="ne-text">）</span> 
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #B5EFF2;background-color:rgba(181,239,242,0.5);margin:4px 0;padding:10px;">
+		<p id="u829e9ce3" class="ne-p">
+			<span class="ne-text">使用光照贴图和探针的全局光照-使用和减少烘培时间的方案 </span> 
+		</p>
+		<p id="u0aa26221" class="ne-p">
+			<a href="https://zhuanlan.zhihu.com/p/101838459" target="_blank" class="ne-link"><span class="ne-text">https://zhuanlan.zhihu.com/p/101838459</span></a> 
+		</p>
+		<p id="ud49c31eb" class="ne-p">
+			<span class="ne-text">探针：减少生成图标数量，减少预计算时间 适合较小物体</span> 
+		</p>
+		<p id="u60d5340e" class="ne-p">
+			<span class="ne-text">使用阶数有限的球谐函数，意味着缺少高频信息 </span> 
+		</p>
+		<p id="ue3e21042" class="ne-p">
+			<span class="ne-text">优化图表数 lightmapuv的展开方式： autouv max distance/max angle/ignore normals（</span>没找到在哪儿？）
+		</p>
+		<p id="ua1fc6813" class="ne-p">
+			<span class="ne-text"></span> 
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #D9C9F8;background-color:rgba(217,201,248,0.5);margin:4px 0;padding:10px;">
+		<p id="uab3e6dfe" class="ne-p">
+			<span class="ne-text">在代码中使用：</span> 
+		</p>
+		<p id="u945218fb" class="ne-p">
+			<a href="https://zhuanlan.zhihu.com/p/461714033" target="_blank" class="ne-link"><span class="ne-text">https://zhuanlan.zhihu.com/p/461714033</span></a> 
+		</p>
+		<p id="ub4ba5a26" class="ne-p">
+			<strong>#pragma multi_compile _ LIGHTMAP_ON 编译是否使用LightMap</strong> 
+		</p>
+		<p id="u106ee38f" class="ne-p">
+			<strong>#pragma multi_compile _ DIRLIGHTMAP_COMBINED LightMap是否使用方向向量</strong> 
+		</p>
+		<p id="uf8ca57cd" class="ne-p">
+			<strong>#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE 烘焙的混合模式</strong> 
+		</p>
+		<p id="ue2502838" class="ne-p">
+			<strong></strong> 
+		</p>
+		<p id="u2d375615" class="ne-p">
+			<strong>顶点结构体：声明lightmauv</strong> 
+		</p>
+		<p id="u91013daf" class="ne-p">
+			<strong>片元结构体：</strong>DECLARE_LIGHTMAP_OR_SH（lightmapuv,vertexSH,1）
+		</p>
+		<p id="ua4833071" class="ne-p">
+			<span class="ne-text">第二个参数是</span>lightmapUV or vertexSH， 最后一个决定是第几个texcoord
+		</p>
+		<p id="u5aa17bf9" class="ne-p">
+			这个宏会定义OUTPUT_LIGHTMAP_UV 和OUTPUT_SH这两个宏
+		</p>
+		<p id="uc11007ab" class="ne-p">
+			使用GI：half3 backedGI=SAMPLE_GI(i.lightmapuv,i.vertexSH,normalWS);
+		</p>
+		<p id="ud85593e7" class="ne-p">
+			mix接收实时阴影：MixrealTimeandBackedGI( Light light, normalWS,backedGI, shadowmask)
+		</p>
+	</div>
+	<p id="u9ec25c68" class="ne-p">
+		<span class="ne-text">Light light结构体：</span> 
+	</p>
+<pre id="ScehT" class="ne-codeblock language-plain">struct Light
+{
+  half3 direction;
+  half3 color;
+  float siatanceAttenuation;
+  half shadowAttenuation;
+  uint layerMask;
+}</pre>
+	<p id="u98383571" class="ne-p">
+		<span class="ne-text">使用实时GI：</span> 
+	</p>
+	<p id="uc4287115" class="ne-p">
+		<span class="ne-text">windows-&gt;rendering-&gt;light 开启realTimeGI</span> 
+	</p>
+	<p id="u0715da1f" class="ne-p">
+		<span class="ne-text">设置场景中contribute to GI 物体， 烘焙lightmap</span> 
+	</p>
+	<p id="u2f69931c" class="ne-p">
+		<span class="ne-text">fragment shader: </span> 
+	</p>
+<pre id="vvY5D" class="ne-codeblock language-plain">InputData inputData;
+                inputData.positionWS=IN.positionWS;
+                inputData.normalWS=Normals;
+                half3 GI=SampleSH(inputData.normalWS);</pre>
+	<p id="u32e7f1ad" class="ne-p">
+		<span class="ne-text">BackedGI================</span> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C7F0DF;background-color:rgba(199,240,223,0.5);margin:4px 0;padding:10px;">
+		<p id="u20470ca4" class="ne-p">
+			<span class="ne-text">当仅使用BackedGI, 不用MixedLighting时，光照会被完全固定，Light.light不再随DirectionLight的旋转变化</span> 
+		</p>
+		<p id="u3b252227" class="ne-p">
+			<span class="ne-text">采样光照贴图（uv:Texcoord1）： </span> 
+		</p>
+		<p id="u0828184c" class="ne-p">
+			<span class="ne-text">(vert)OUTPUT_LIGHTMAP_UV(IN.lightmapuv,unity_LightmapST,OUT.lightmapuv);</span> 
+		</p>
+		<p id="uddbb5e87" class="ne-p">
+			<span class="ne-text">(frag)SAMPLE_TEXTURE2D(unity_Lightmap,samplerunity_Lightmap, IN.lightmapuv)；</span> 
+		</p>
+	</div>
+	<p id="ub5b1ec11" class="ne-p">
+		<span class="ne-text">PrecomputedGI================================</span> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C7F0DF;background-color:rgba(199,240,223,0.5);margin:4px 0;padding:10px;">
+		<p id="uf7f77ec1" class="ne-p">
+			<span class="ne-text">Precomputed GI允许光照角度、物体颜色变化。是实时计算的。PrecomputedGI的贴图不能像Backed Lightmap一样存在Assets中拖进shader采样</span> 
+		</p>
+		<p id="u2eb6de27" class="ne-p">
+			<span class="ne-text">lit中用了Dynamicligtmap:Texcoord2（第三套uv?）</span> 
+		</p>
+		<p id="uc176fe93" class="ne-p">
+			<span class="ne-text">OUT.uv2 = IN.uv2 * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;</span> 
+		</p>
+		<p id="ud0b0e485" class="ne-p">
+			<span class="ne-text">float3 lightMap=SampleSingleLightmap(TEXTURE2D_ARGS(unity_Lightmap,samplerunity_Lightmap), IN.uv2,half4(1,1,0,0),false,half4(1,1,1,1)); 最后两项参数是编码和解码不同的lightmap格式</span> 
+		</p>
+		<p id="u25c1e4cd" class="ne-p">
+			<span class="ne-text">或者：</span> 
+		</p>
+		<p id="uccc2dd1b" class="ne-p">
+			<span class="ne-text">SAMPLE_TEXTURE2D(unity_Lightmap,samplerunity_Lightmap, IN.lightmapuv);（lit的用法）</span> 
+		</p>
+		<p id="u892c51bc" class="ne-p">
+			<span class="ne-text">使用realtimeGI, 则Backed Lightmap不存在</span> 
+		</p>
+		<p id="uc8053370" class="ne-p">
+			<span class="ne-text">将RealTime Environment Light 取消勾选 重新烘焙 得到 BackedGI图</span> 
+		</p>
+		<p id="u67269a2d" class="ne-p">
+			<span class="ne-text">这样就在采样环境光贴图的同时保留了光照的角度变化</span> 
+		</p>
+	</div>
+	<p id="u60525596" class="ne-p">
+		<img src="https://cdn.nlark.com/yuque/0/2025/jpeg/43118317/1746488821334-860f4a05-fab0-4613-9003-dbdb8ecc371e.jpeg" width="1167" title="" id="u8853409f" class="ne-image" /> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #F6E1AC;background-color:rgba(246,225,172,0.5);margin:4px 0;padding:10px;">
+		<p id="uab99b914" class="ne-p">
+			<span class="ne-text">C#中也可以获取第二套UV： Vector2 uv2=ParentMesh.uv2[i];</span> 
+		</p>
+	</div>
+	<p id="u6142d883" class="ne-p">
+		<span class="ne-text">SH和lightmap: SH用于动态物体，lightmap用于静态。 （但是SH采样出来主要是天空盒的颜色，没有放prob，不知道是不是这个原因，还没搞清楚）</span> 
+	</p>
 
                 </div>
             </div>
