@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_3</title>
+		<script src="Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="Assets/Style/TWstyle.css"
+		> 
+
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="index.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>  
+	<p id="u8186ddf5" class="ne-p">
+		<span class="ne-text">为了方便获取光源的视角作为摄像机渲染的参数，用了custom render pipleline</span>
+	</p>
+	<div class="ne-alert" style="border:1px solid #BEC0BF;background-color:#EFF0F0;margin:4px 0;padding:10px;">
+		<p id="u70141e0b" class="ne-p">
+			<a href="https://github.com/w199753/SRP_GI_ImpTest/blob/main/Assets/Scripts/FRP.cs" target="_blank" class="black_a"><span class="ne-text">https://github.com/w199753/SRP_GI_ImpTest/blob/main/Assets/Scripts/FRP.cs</span></a>
+		</p>
+		<p id="uf84a127a" class="ne-p">
+			<span class="ne-text"> </span><a href="https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/" target="_blank" class="black_a"><span class="ne-text">https://catlikecoding.com/unity/tutorials/custom-srp/custom-render-pipeline/</span></a>
+		</p>
+	</div>
+	<p id="u0c7f9244" class="ne-p">
+		<br />
+	</p>
+	<p id="ud9ef4fa5" class="ne-p">
+		<span class="ne-text">流程：</span>
+	</p>
+	<p id="ud24c2c41" class="ne-p">
+		<strong>-cull</strong>
+	</p>
+	<p id="uc641d59b" class="ne-p">
+		<span class="ne-text">CullingResults cullResults= context.Cull(ref ScriptableCullingParameters p)</span>
+	</p>
+	<p id="u93d05580" class="ne-p">
+		<strong>-清除render target</strong>
+	</p>
+	<p id="u847b2397" class="ne-p">
+		<span class="ne-text">buffer.ClearRenderTarget(true,true,Color.clear);</span>
+	</p>
+	<p id="u8dc26e14" class="ne-p">
+		<strong>-设置 context操作</strong>
+	</p>
+	<p id="uc9b8746b" class="ne-p">
+		<span class="ne-text">context.SetupCameraProperties(camera);</span>
+	</p>
+	<p id="ud4fa41a4" class="ne-p">
+		<span class="ne-text">context.DrawRnederers(cullingresults,drawSettings, SortSettings);</span>
+	</p>
+	<p id="u513ba93c" class="ne-p">
+		<span class="ne-text">context.DrawSkybox(camera);</span>
+	</p>
+	<p id="u2978ff3b" class="ne-p">
+		<span class="ne-text">...</span>
+	</p>
+	<p id="u68df6de8" class="ne-p">
+		<strong>-提交command buffer 到 context 并清除buffer以供下次使用</strong>
+	</p>
+	<p id="u65396f30" class="ne-p">
+		<span class="ne-text">context.ExcuteCommandBuffer(buffer);</span>
+	</p>
+	<p id="ue81dc1fd" class="ne-p">
+		<span class="ne-text">buffer.clear();</span>
+	</p>
+	<p id="u858542af" class="ne-p">
+		<span class="ne-text">-</span><strong>提交context</strong>
+	</p>
+	<p id="u37b3aba9" class="ne-p">
+		<span class="ne-text">context.submit();</span>
+	</p>
+	<p id="u2b6665fe" class="ne-p">
+		<br />
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="u4228d428" class="ne-p">
+			<span class="ne-text">错题本：</span>
+		</p>
+		<p id="u3a63932c" class="ne-p">
+			<span class="ne-text">替换自定义CustomRenderPipeline Assets到Graphic中，未生效- 在Quality中选择的RenderPilelineAssets仍为URP</span>
+		</p>
+	</div>
+
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>

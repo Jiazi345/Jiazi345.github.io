@@ -33,7 +33,64 @@
             <div class='ContentBox' id='characters'>
                 <div class='BcColor_ContentBox'>  
 
+<p id="u73f07d8e" class="ne-p">
+		<span class="ne-text">kernel是什么？</span>
+	</p>
+	<p id="ubf3d857b" class="ne-p">
+		<span class="ne-text">在 computeshader中：</span>
+	</p>
+	<p id="ubb11c6b1" class="ne-p">
+		<span class="ne-text">[numthreads(8,8,1)] 代表8行8列的一组像素</span>
+	</p>
+	<p id="ue079b655" class="ne-p">
+		<span class="ne-text">在C#中 shader.Dispatch(int kernelid, int x, int  y, int  n);代表绘制x行y列n层的kernel</span>
+	</p>
+	<p id="u506896a5" class="ne-p">
+		<span class="ne-text">shader.FindKernel(string KernalName); 从名字获取kernel的id</span>
+	</p>
+	<p id="u45052525" class="ne-p">
+		<span class="ne-text">如：在256*256的render texture中， 绘制[numthreads(8,8,1)]的kernel,x=32 y=32 n=1 则铺满整个纹理</span>
+	</p>
+<pre id="NISUh" class="ne-codeblock language-cpp">#pragma kernel SoildColor
 
+RWTexture2D&lt;float4&gt; Result;
+
+[numthreads(8,8,1)]
+void SoildColor(uint3 id: SV_DISPATCHTHREADID)
+{
+    Result[id.xy]=float4(1,1,0,1);
+}</pre>
+<pre id="JaqzV" class="ne-codeblock language-cpp">public ComputeShader shader;
+    public int Resolution = 256;
+    public string KernalName;
+    Renderer rend;
+    RenderTexture outputTexture;
+    int kernelHandle;
+
+ void Start()
+    {
+        outputTexture = new RenderTexture(Resolution, Resolution, 0);
+        outputTexture.enableRandomWrite=true;
+        outputTexture.Create();
+
+        rend = GetComponent&lt;Renderer&gt;();
+        rend.enabled = true;
+        InitShader();
+    }
+
+    private void InitShader()
+    {
+        kernelHandle = shader.FindKernel(KernalName);
+
+        shader.SetTexture(kernelHandle, "Result", outputTexture);
+        rend.material.SetTexture("_BaseMap", outputTexture);
+        DispatchShader(Resolution / 8, Resolution / 8);
+    }
+
+    private void DispatchShader(int x, int y)
+    {
+        shader.Dispatch(kernelHandle, x, y, 1);
+    }</pre>
                 </div>
             </div>
 

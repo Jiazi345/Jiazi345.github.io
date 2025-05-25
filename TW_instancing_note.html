@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_3</title>
+		<script src="Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="Assets/Style/TWstyle.css"
+		> 
+
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="index.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>  
+<p id="u2c9e1e80" class="ne-p">
+		<span class="ne-text">问题：自定义Terrian变成洋红色，使用GPUinstancing的草地和鸟群没有渲染</span>
+	</p>
+	<div class="ne-alert" style="border:1px solid #C7F0DF;background-color:rgba(199,240,223,0.5);margin:4px 0;padding:10px;">
+		<p id="u1b256d5f" class="ne-p">
+			<span class="ne-text">【已解决】</span>
+		</p>
+		<p id="uabb1d60d" class="ne-p">
+			<span class="ne-text">两个问题是一样的。 subshader里写了tag， pass里又写了一遍tag就会这样。</span>
+		</p>
+		<p id="u63138077" class="ne-p">
+			<span class="ne-text">编辑器显示正常</span>
+		</p>
+		<p id="u0e5722fe" class="ne-p">
+			<span class="ne-text">赋值到其它物体上打包后是粉色，用来instancing则完全不显示且没有任何报错。</span>
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #C7F0DF;background-color:rgba(199,240,223,0.5);margin:4px 0;padding:10px;">
+		<p id="u9df3c836" class="ne-p">
+			<span class="ne-text">不正确的坐标转换也可能导致完全不渲染？总之就是哪里都没有</span>
+		</p>
+	</div>
+	<p id="u98748895" class="ne-p">
+		<span class="ne-text">下面是测试历程记录。</span>
+	</p>
+	<div class="ne-alert" style="border:1px solid #F6E1AC;background-color:rgba(246,225,172,0.5);margin:4px 0;padding:10px;">
+		<p id="uc564a1c2" class="ne-p">
+			<span class="ne-text">Terrian材质变粉：</span>
+		</p>
+		<p id="u54641d56" class="ne-p">
+			<span class="ne-text">不是地形的问题，赋予到别的物体上也会变粉</span>
+		</p>
+		<p id="u73d059f3" class="ne-p">
+			<span class="ne-text">也不是类型转换警告这些问题 也不是shader feature 和multi compile</span>
+		</p>
+		<p id="u4274f39d" class="ne-p">
+			解决：将HLSLINCLUDE转移到HLSLPROGRAM中 <strong>不是根本原因。解决是因为注释掉了subshader下的tag</strong>
+		</p>
+	</div>
+	<p id="u12eb6ba2" class="ne-p">
+		<span class="ne-text">instancing草没了的问题：编辑器里没有问题但build成exe就全部不显示</span>
+	</p>
+	<p id="u2899d1fd" class="ne-p">
+		<span class="ne-text">查看输出/报错：</span>
+	</p>
+	<p id="u2327845f" class="ne-p">
+		<span class="ne-text">警告：implicit truncation of vector type at...</span>
+	</p>
+	<p id="u677e97a8" class="ne-p" style="margin-left:2em;">
+		<span class="ne-text"> Output value 'vert' is not completely initialized at</span>
+	</p>
+	<p id="u843fc567" class="ne-p">
+		<span class="ne-text">修改这些警告后地形还是洋红的</span>
+	</p>
+	<p id="u8f928387" class="ne-p">
+		<span class="ne-text">查看player.log：脚本Resources.Load&lt;Material&gt;("Land") 成功输出；</span>
+	</p>
+	<p id="u784de0c6" class="ne-p">
+		<span class="ne-text">查找shader Shader.Find("Terrian/triplanar")成功输出；</span>
+	</p>
+	<p id="ua95a8288" class="ne-p">
+		<span class="ne-text">禁用strip 没用</span>
+	</p>
+	<p id="u20d986ce" class="ne-p">
+		<span class="ne-text">GPUinstancing脚本打印实例数量和传递到computeshader的参数，正确打印</span>
+	</p>
+
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>
