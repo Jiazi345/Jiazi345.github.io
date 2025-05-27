@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+	<head>
+		<meta charset="UTF-8" >
+        <meta name="viewport" content="width=device-width">	
+		<title>Traverse Wildness-Doc_3</title>
+		<script src="Assets/Scripts/TWscript.js"></script>	
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+        <link
+			rel="stylesheet"
+			href="Assets/Style/TWstyle.css"
+		> 
+
+    </head>
+<body id='TW_1_body'>
+
+			<div id='TitleBox'>
+                <div id='titles'>
+                    <a href="TW_0.html"> <Img src="Assets/Imgs/Title_cn.png" alt='CN_TitleText'></a>
+                    <p> [Tech Documents]</p>
+
+
+                </div>
+                <div id='Box_TitleBoxElems'>
+                    <div class='TitleBoxElems'><a href="TW_1.html">Story</a></div>
+                    <div class='TitleBoxElems'><a href="TW_2.html">Game</a></div>
+                    <div class='TitleBoxElems'><a href="TW_3.html">Arts</a></div>
+                    <div class='TitleBoxElems'><a href="index.html">Documants</a></div>
+                </div>
+            </div>
+
+
+            <div class='ContentBox' id='characters'>
+                <div class='BcColor_ContentBox'>  
+
+<p>
+	<p id="u9f8ca904" class="ne-p">
+		#Note:百人计划课程笔记
+	</p>
+	<p id="u9f8ca904" class="ne-p">
+		<strong>RenderPipeline：</strong> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="u4d2802c8" class="ne-p">
+			<span class="ne-text">CameraRender render=new CameraRender();</span> 
+		</p>
+		<p id="ud6ad848f" class="ne-p">
+			<span class="ne-text">Render (ScriptableRenderContext context, Camera[] camera){}</span> 
+		</p>
+	</div>
+	<p id="uc667f623" class="ne-p">
+		<span class="ne-text">当有多个相机时，需要在Render中遍历所有的相机</span> 
+	</p>
+	<p id="u29ff14c4" class="ne-p">
+		<strong>RenderPipelineAsset:</strong> 
+	</p>
+	<p id="udc9ed33b" class="ne-p">
+		<span class="ne-text">返回继承Renderpipeline的类的实例</span> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="u02a0962f" class="ne-p">
+			<span class="ne-text">override RenderPipeline CreatePipeline()</span> 
+		</p>
+		<p id="uc21e2b28" class="ne-p">
+			<span class="ne-text">{</span> 
+		</p>
+		<p id="uc9dc4bee" class="ne-p" style="text-indent:2em;">
+			<span class="ne-text">return new CustomRenderPipeline();</span> 
+		</p>
+		<p id="u6d6410e1" class="ne-p">
+			<span class="ne-text">} </span> 
+		</p>
+	</div>
+	<p id="u60873df2" class="ne-p">
+		<strong>Renderer:</strong> 
+	</p>
+	<p id="u1e28de1d" class="ne-p">
+		使用CommandBuffer把渲染过程相关指令写入到ScriptableRenderContext, ScriptableRenderContext调用Submit提交
+	</p>
+	<p id="u11aa5b5d" class="ne-p">
+		可以把其中的一段抽离为pass
+	</p>
+	<p id="u263ebece" class="ne-p">
+		<strong>更新渲染状态：</strong> 
+	</p>
+	<p id="u2b39e212" class="ne-p">
+		RenderStateBlock和每个shader各自的Depth,ZWrite,Blend等状态有关。
+	</p>
+	<p id="u02ea10e2" class="ne-p">
+		StencilState与ForwardRenderer中的ForwardRendererData的具体设置有关
+	</p>
+	<p id="u74c4e68f" class="ne-p">
+		RenderObjectPass比DrawObjectPass多了SetDepthState和SetStencilState两个函数
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="ud9d8cdb8" class="ne-p">
+			context.DrawRenderes（renderingData,cullResults,ref drawSettings,ref filterSettings ,ref m_RenderStateBlock);
+		</p>
+	</div>
+	<p id="u3197cb53" class="ne-p">
+		<span class="ne-text">CullingResult 物体 灯光 反射探针等剔除的结果</span> 
+	</p>
+	<p id="u1770842d" class="ne-p">
+		<span class="ne-text">DrawSetting 设置绘制顺序</span> 
+	</p>
+	<p id="u955d5237" class="ne-p">
+		<span class="ne-text">FilteringSetting 设置过滤渲染指定的Layer,</span> 
+	</p>
+	<p id="u7b012eef" class="ne-p">
+		<span class="ne-text">RenderStateBlock重载深度 模板写入方式</span> 
+	</p>
+	<p id="u38f7328f" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<p id="uaabd0369" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<p id="u8416f52a" class="ne-p">
+		<span class="ne-text">#pragma Instancing_options assumeuniformscaling </span> 
+	</p>
+	<p id="u269b5cca" class="ne-p">
+		<span class="ne-text">假定均一缩放，更改UNITY_WORLDTOOBJECTARRAY_CB的分布，可以绘制更多实例</span> 
+	</p>
+	<p id="u9aa56514" class="ne-p">
+		<strong>RenderTarget:</strong> 
+	</p>
+	<p id="ud1c3ab32" class="ne-p">
+		<span class="ne-text">3D场景可以被渲染到中间缓存区，或目标纹理（RenderTargetTexture），而不是帧缓冲区或后台缓冲区。</span> 
+	</p>
+	<p id="ue8e099d0" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<p id="u9a8366d2" class="ne-p">
+		<strong>Render Texture: </strong> 
+	</p>
+	<p id="ue6307aac" class="ne-p">
+		<span class="ne-text">被设置为摄像机的TargetTexture时，会使摄像机渲染结果渲染到RenderTexture而不是屏幕上。</span> 
+	</p>
+	<p id="ua3ce3d0a" class="ne-p">
+		<span class="ne-text">在某些情况下可能会丢失：加载新关卡，进入屏幕保护模式，进出全屏。需要用IsCreate进行检测</span> 
+	</p>
+	<p id="ud71eb854" class="ne-p">
+		<span class="ne-text">需要使用Release进行释放，因为它不会被自动GC</span> 
+	</p>
+	<p id="u90bbaadb" class="ne-p">
+		<strong>RenderTexture 构造</strong> 
+	</p>
+	<ol class="ne-ol">
+		<li id="uf458ed79">
+			<span class="ne-text">RenderTextureDescriptor 用于初始化RenderTexture的结构体</span> 
+		</li>
+	</ol>
+	<p id="u1254bc17" class="ne-p">
+		<span class="ne-text">参数：Width,Height，colorFormat(颜色缓冲区格式)，depthBufferBits（深度缓冲区位数），mipCount（Mip数量）</span> 
+	</p>
+	<ol class="ne-ol">
+		<li id="u3451e62b">
+			<span class="ne-text">public RenderTexture (int width, int height, int depth, RenderTextureFormat.format, RenderTextureReadWirte)</span> 
+		</li>
+		<li id="u5a235467">
+			<span class="ne-text">textureToCopy 根据已有RenderTexture创建</span> 
+		</li>
+	</ol>
+	<p id="udfdedfd6" class="ne-p">
+		<strong>CommandBuffer.GetTemporaryRT:</strong> 
+	</p>
+	<p id="u0299ef7d" class="ne-p">
+		<span class="ne-text"> 申请一张临时RT 配合Renderidentifier使用</span> 
+	</p>
+	<p id="u817ac2a1" class="ne-p">
+		<strong>CommandBuffer.SetRenderTarget</strong> 
+	</p>
+	<p id="uf4eed705" class="ne-p">
+		<span class="ne-text">添加一个激活渲染目标的指令到CommandBuffer中</span> 
+	</p>
+	<p id="u5f2680a8" class="ne-p">
+		<span class="ne-text">指定一张RenderTexture作为渲染目标，可以直接使用，或使用GetTemporaryRT指令申请的RenderTexture的Id(int)， 也可以使用渲染周期内生成的内置(BuildIn)RenderTexture[BuildinRenderTextureType]</span> 
+	</p>
+	<p id="uecf5676c" class="ne-p">
+		<span class="ne-text">它们都会被转换为RenderTextureidentifier这个结构体。这个结构体描述绑定的RenderTexture如何应用到RenderTarget上，如：指定Mip, Cubemap的face，Texture3D的DepthSlice</span> 
+	</p>
+	<p id="u1e491453" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<p id="u7c2b89fd" class="ne-p">
+		<strong>如何申请一张RT：</strong> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="u59570258" class="ne-p">
+			<span class="ne-text">初始化一个RenderTextureDescriptor;</span> 
+		</p>
+		<p id="uec6f4014" class="ne-p">
+			<span class="ne-text">if(renderTexture==null||!renderTexture.IsCreate())</span> 
+		</p>
+		<p id="uc7c8ed4d" class="ne-p">
+			<span class="ne-text">{</span> 
+		</p>
+		<p id="ud1c1cc33" class="ne-p">
+			//IsCreate防止已经被创建但RT为空的情况，比如加载新关卡
+		</p>
+		<p id="u4f5cbb8a" class="ne-p" style="text-indent:2em;">
+			<span class="ne-text">CoreUtils.Destory(renderTexture);</span> 
+		</p>
+		<p id="u80696e14" class="ne-p" style="text-indent:2em;">
+			<span class="ne-text">renderTexture=new RenderTexture(descriptor);</span> 
+		</p>
+		<p id="u87ca8ade" class="ne-p" style="text-indent:2em;">
+			<span class="ne-text">renderTexture.name="RequestRT";</span> 
+		</p>
+		<p id="u2bb91e9c" class="ne-p">
+			<span class="ne-text">}</span> 
+		</p>
+		<p id="ud01276ea" class="ne-p">
+			//SetRenderTarget
+		</p>
+		<p id="u68a208d8" class="ne-p">
+			<span class="ne-text">ConfigureTarget(renderTexture);</span> 
+		</p>
+	</div>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="ucb555762" class="ne-p">
+			<span class="ne-text">初始化一个RenderTextureDescriptor;</span> 
+		</p>
+		<p id="uf608d6e8" class="ne-p">
+			<span class="ne-text">renderTexture=RenderTexture.GetTemporary(descriptor);</span> 
+		</p>
+		<p id="u927b2bd1" class="ne-p">
+			<span class="ne-text">renderTexture.name="RequestRT";</span> 
+		</p>
+		<p id="u95b4a6ac" class="ne-p">
+			<span class="ne-text">ConfigureTarget(renderTarget);</span> 
+		</p>
+		<p id="ua8b359af" class="ne-p">
+			<span class="ne-text">释放临时RT：cmd.ReleaseTemporaryRT(renderTextureID)</span> 
+		</p>
+		<p id="u1fb5825f" class="ne-p">
+			<span class="ne-text">Release只释放显存，Destory会把Object销毁的同时把对应显存也释放掉，重新申请内存增加负担。</span> 
+		</p>
+	</div>
+	<p id="uadb5f68a" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<div class="ne-alert" style="border:1px solid #C0DDFC;background-color:rgba(192,221,252,0.5);margin:4px 0;padding:10px;">
+		<p id="u9b4a99a4" class="ne-p">
+			<span class="ne-text">初始化一个RenderTextureDescriptor;</span> 
+		</p>
+		<p id="u80949d5e" class="ne-p">
+			<span class="ne-text">RenderTextureID=Shader.PropertyToID("Request_ID");</span> 
+		</p>
+		<p id="u8a12f123" class="ne-p">
+			<span class="ne-text">cmd.GetTemporaryRT(RenderTextureID, descriptor, FilterMode.Billiner);</span> 
+		</p>
+		<p id="u90a937e4" class="ne-p">
+			<span class="ne-text">ConfigureTarget(renderTarget);</span> 
+		</p>
+		<p id="ub1942bd4" class="ne-p">
+			<span class="ne-text"></span> 
+		</p>
+		<p id="ud86ba6cb" class="ne-p">
+			<span class="ne-text">Shader.PropertyToID获取一个全局HashID, 在材质中使用时可以直接使用名字：</span> 
+		</p>
+		<p id="ua4bad4ab" class="ne-p">
+			<span class="ne-text">SAMPLER_TEXTURE2D(Request_ID, sampler_Request_ID, uv);</span> 
+		</p>
+	</div>
+	<p id="u7a61f11e" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+	<p id="u3ca95dd0" class="ne-p">
+		CommandBuffer.GetTemporaryRT和RenderTexture.GetTemporary的区别:
+	</p>
+	<p id="u4a4f8833" class="ne-p">
+		RenderTexture.GetTemporary需要手动释放。
+	</p>
+	<p id="ua329099c" class="ne-p">
+		<strong><span class="ne-text"></span></strong> 
+	</p>
+	<p id="uc7ef7ade" class="ne-p">
+		<span class="ne-text"></span> 
+	</p>
+</p>
+                </div>
+            </div>
+
+
+            <div id='EndBox'>
+             Quik Jump To:
+            <ul>
+                <li><a href="TW_0.html">HomePage</a></li>
+                <li><a href="#top">Back To Top</a></li>
+                <li><a href="https://github.com/Jiazi345">Author[github]</a></li>
+             </ul>
+            </div>
+
+            <img id="bg_stars" src="../Assets/Imgs/stars.png" alt="bgstars">
+            <img  class="bottomImage"  id="bottom_light" src="Assets/Imgs/BackGround_Buildings_light.png" alt="light"  style= "z-index: -1;">
+            <img  class="bottomImage"  id="bottom_building"  src="Assets/Imgs/BackGround_Buildings.png" alt="building" style= "z-index: -2;">
+
+</body>		
+</html>
